@@ -15,4 +15,3 @@ curl -s -X PATCH \
      -H "Content-Type: application/json" \
      -d "{\"config\":{\"url\":\"$NGROK_URL/webhook\",\"content_type\":\"json\"}}" \
      "https://api.github.com/repos/$GITHUB_USER/$GITHUB_REPO/hooks/$WEBHOOK_ID"
-Running the Script on Windows
