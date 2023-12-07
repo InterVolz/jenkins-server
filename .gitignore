@@ -14,3 +14,6 @@ webhook-server/package-lock.json
 
 # Jenkins (if any sensitive or local config files)
 docker-jenkins/local-config.yaml
+
+# 
+webhook-server/update_webhook.sh

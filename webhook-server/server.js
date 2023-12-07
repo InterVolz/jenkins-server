@@ -1,25 +1,32 @@
 const express = require('express');
+const axios = require('axios');
 const app = express();
-const port = 3000; // or any other preferred port
+const port = 3000;
 
-// Middleware to parse JSON requests
 app.use(express.json());
 
-// Route to handle POST requests to '/webhook'
-app.post('/webhook', (req, res) => {
+app.post('/webhook', async (req, res) => {
     console.log('Webhook received:', req.body);
 
-    // Example: Handle push event
-    if (req.body && req.body.pusher) {
-        console.log('Push event received');
-        // Add logic to handle push event here
+    try {
+        const jenkinsResponse = await axios.post(
+            `${process.env.JENKINS_URL}/job/Intervolz Deployment/build?token=${process.env.JENKINS_TOKEN}`,
+            {},
+            {
+                auth: {
+                    username: process.env.JENKINS_USER,
+                    password: process.env.JENKINS_TOKEN
+                }
+            }
+        );
+        console.log('Triggered Jenkins job:', jenkinsResponse.status);
+    } catch (error) {
+        console.error('Error triggering Jenkins job:', error);
     }
 
-    // Respond to GitHub that the webhook was received
     res.status(200).send('Webhook processed');
 });
 
-// Start the server
 app.listen(port, () => {
-    console.log(`Webhook server listening at http://localhost:${port}`);
+    console.log(`Server listening at http://localhost:${port}`);
 });
