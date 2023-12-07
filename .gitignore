@@ -1,0 +1,16 @@
+# General
+*.log
+*.env
+
+# Node.js
+webhook-server/node_modules/
+webhook-server/package-lock.json
+
+# Docker (if any temporary or build files)
+**/temp/
+**/*.tmp
+**/*.tar
+**/*.tar.gz
+
+# Jenkins (if any sensitive or local config files)
+docker-jenkins/local-config.yaml

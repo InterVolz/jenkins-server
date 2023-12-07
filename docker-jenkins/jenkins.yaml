@@ -1,0 +1,22 @@
+
+
+jenkins:
+  systemMessage: "My Jenkins configured via JCasC"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "admin"
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              id: "github-creds"
+              username: "gituser"
+              password: "gitpassword"
+              description: "GitHub credentials"
+
+# other configurations...
