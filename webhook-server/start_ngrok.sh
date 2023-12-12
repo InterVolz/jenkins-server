@@ -3,25 +3,30 @@
 # Kill existing Ngrok process
 kill_ngrok() {
     echo "Stopping existing Ngrok process..."
-    pkill -f ngrok
+
+    NGROK_PID=$(pgrep -f ngrok)
+    
+    if [ ! -z "$NGROK_PID"]; then
+        kill -9 $NGROK_PID
+    fi
 }
 
 # Check if Ngrok is already running
 if pgrep -f ngrok > /dev/null; then
     kill_ngrok
+    sleep 3
 fi
 
-# Start Ngrok
+echo "Starting Ngrok..."
+ngrok http 3000 &
 
-ngrok http 8080
+NGROK_PID = $!
 
-# Run the webhook update script in a subshell in the background
-(
-    # Wait for Ngrok to initialize
-    echo "Waiting for Ngrok to initialize..."
-    sleep 10
-
-    # Run the webhook update script
-    echo "Running webhook update script..."
+update_webhook() {
+    sleep 5
     ./update_webhook.sh
-) &
+}
+
+(update_webhook &)
+
+wait $NGROK_PID
