@@ -1,13 +1,9 @@
 
 
-## Running it
+## Run ngrok external IP and redirect to jenkins@:8080
 
 ```sh
-# Start the server in dev environment
-npm run start:dev
-
-# Lint
-npm run lint
+ngrok http 8080
 ```
 
 ## Setup

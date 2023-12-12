@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Start MongoDB') {
+            steps {
+                script {
+                    // Starting MongoDB Docker Container
+                    sh '''
+                    mkdir -p /var/lib/mongodb-data
+                    sudo chown -R 999:999 /var/lib/mongodb-data
+                    docker run -d \
+                        --name mongodb \
+                        -v /var/lib/mongodb-data:/data/db \
+                        -p 27017:27017 \
+                        mongo
+                    '''
+                }
+            }
+        }
+
+        stage('Build and Test') {
+            steps {
+                // Add steps for your application's build and test process
+                echo 'Building and testing application...'
+            }
+        }
+
+        // Add more stages as needed
+    }
+
+    post {
+        always {
+            // Perform cleanup or other post-build tasks
+            echo 'Pipeline execution complete.'
+        }
+    }
+}

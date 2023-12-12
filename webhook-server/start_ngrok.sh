@@ -12,8 +12,8 @@ if pgrep -f ngrok > /dev/null; then
 fi
 
 # Start Ngrok
-ngrok http 3000
 
+ngrok http 8080
 
 # Run the webhook update script in a subshell in the background
 (
