@@ -8,10 +8,16 @@
 3. In the pipeline configuration, paste Jenkinsfile script directly.
 4. Save the configuration.
 
-## Permissions
+## Setup
 
-For MongoDB:
+For MongoDB Data:
 ```sh
 sudo mkdir -p /var/lib/mongodb-data
 sudo chown -R jenkins:jenkins /var/lib/mongodb-data
+```
+For MongoDB Data Setup Script:
+```sh
+sudo mkdir -p /var/lib/mongodb-setup
+sudo cp mongodb/mongo-init.js /var/lib/mongodb-setup
+sudo chown -R jenkins:jenkins /var/lib/mongodb-setup
 ```

@@ -8,10 +8,11 @@ pipeline {
                     // Starting MongoDB Docker Container
                     sh '''
                     docker run -d \
-                        --name mongodb \
-                        -v /var/lib/mongodb-data:/data/db \
-                        -p 27017:27017 \
-                        mongo
+                    -v /var/lib/mongodb-setup:/docker-entrypoint-initdb.d \
+                    -v /var/lib/mongodb-data:/data/db \
+                    -p 27017:27017 \
+                    --name mongodb \
+                    mongo
                     '''
                 }
             }
