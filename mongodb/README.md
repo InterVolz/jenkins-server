@@ -21,3 +21,9 @@ sudo mkdir -p /var/lib/mongodb-setup
 sudo cp mongodb/mongo-init.js /var/lib/mongodb-setup
 sudo chown -R jenkins:jenkins /var/lib/mongodb-setup
 ```
+
+## Wipe out data - careful...
+
+```sh
+sudo rm -rf /var/lib/mongodb-data/*
+```
