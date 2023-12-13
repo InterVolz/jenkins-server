@@ -2,48 +2,41 @@ pipeline {
     agent any
 
     stages {
-        stage('Start MongoDB') {
-            
+        stage('Stop and Remove MongoDB Container') {
             steps {
                 script {
-                    // Check if the MongoDB container is already running
-                    sh(script: "docker ps -q --filter name=mongodb", returnStdout: true).trim()
-                    if (env.CONTAINER_ID) {
-                        // Stop and remove the existing MongoDB container
-                        sh "docker stop ${env.CONTAINER_ID}"
-                        sh "docker rm ${env.CONTAINER_ID}"
-                    }
+                    // Stop the existing MongoDB container if it exists, ignore errors
+                    sh script: "docker stop mongodb || true", returnStatus: true
+
+                    // Remove the existing MongoDB container if it exists, ignore errors
+                    sh script: "docker rm -f mongodb || true", returnStatus: true
                 }
             }
-            
         }
 
-        stage('Run Docker Container') {
+        stage('Run MongoDB Container') {
             steps {
                 script {
-                    // Starting MongoDB Docker Container
+                    // Run the MongoDB container
                     sh '''
-                    docker run -d \
-                    -v /var/lib/mongodb-setup:/docker-entrypoint-initdb.d \
-                    -v /var/lib/mongodb-data:/data/db \
-                    -p 27017:27017 \
-                    --name mongodb \
-                    mongo
+                        docker run -d \
+                        -v /var/lib/mongodb-setup:/docker-entrypoint-initdb.d \
+                        -v /var/lib/mongodb-data:/data/db \
+                        -p 27017:27017 \
+                        --name mongodb \
+                        mongo
                     '''
                 }
             }
         }
 
-        // Add more stages as needed
+        // Additional stages as required...
     }
 
     post {
         always {
-            // Perform cleanup or other post-build tasks
+            // Cleanup or other post-build tasks
             echo 'Pipeline execution complete.'
         }
     }
 }
-
-
-        
