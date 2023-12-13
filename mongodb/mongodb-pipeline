@@ -3,6 +3,22 @@ pipeline {
 
     stages {
         stage('Start MongoDB') {
+            
+            steps {
+                script {
+                    // Check if the MongoDB container is already running
+                    sh(script: "docker ps -q --filter name=mongodb", returnStdout: true).trim()
+                    if (env.CONTAINER_ID) {
+                        // Stop and remove the existing MongoDB container
+                        sh "docker stop ${env.CONTAINER_ID}"
+                        sh "docker rm ${env.CONTAINER_ID}"
+                    }
+                }
+            }
+            
+        }
+
+        stage('Run Docker Container') {
             steps {
                 script {
                     // Starting MongoDB Docker Container
@@ -18,13 +34,6 @@ pipeline {
             }
         }
 
-        stage('Build and Test') {
-            steps {
-                // Add steps for your application's build and test process
-                echo 'Building and testing application...'
-            }
-        }
-
         // Add more stages as needed
     }
 
@@ -35,3 +44,6 @@ pipeline {
         }
     }
 }
+
+
+        

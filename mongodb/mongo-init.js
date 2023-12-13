@@ -26,7 +26,7 @@ db.playerStats.insertOne({
         "Maven Invite: The Twisted": true,
         "Maven Invite: The Forgotten": true,
         "Maven Invite: The Hidden": true,
-        "Maven Invite: The Edlerslayers": true,
+        "Maven Invite: The Elderslayers": true,
         "Maven Invite: The Feared": true,
     },
     "editHistory": [] // Empty array to track the history of edits
