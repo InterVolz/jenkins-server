@@ -18,3 +18,9 @@ show dbs
 use pathOfExileStats
 db.playerStats.find().pretty()
 ```
+
+### Wipe DB - careful...
+
+```sh
+sudo rm -rf /var/lib/mongodb-data/*
+```
