@@ -7,8 +7,6 @@ pipeline {
                 script {
                     // Starting MongoDB Docker Container
                     sh '''
-                    mkdir -p /var/lib/mongodb-data
-                    sudo chown -R 999:999 /var/lib/mongodb-data
                     docker run -d \
                         --name mongodb \
                         -v /var/lib/mongodb-data:/data/db \
