@@ -6,6 +6,8 @@
     - [Prereqs](#prereqs)
   - [Setup](#setup)
     - [Build](#build)
+    - [Create network for docker containers](#create-network-for-docker-containers)
+    - [Run Docker](#run-docker)
     - [Persist Docker and set name](#persist-docker-and-set-name)
     - [Restart](#restart)
     - [Monitor](#monitor)
@@ -59,24 +61,31 @@ The Dockerfile is the cornerstone of your Dockerized Jenkins setup. Here's a mor
 ### Build
 
 ```sh
-docker build -t my-custom-jenkins .
-```fof
+docker build -t intervolz-jenkins .
+```
+
+### Create network for docker containers
+
+```sh
+docker network create intervolz-network
+```
 
 ### Run Docker
 
 ```sh
-docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home my-custom-jenkins
+docker run -p 8080:8080 --network intervolz-network -p 50000:50000 -v jenkins_home:/var/jenkins_home intervolz-jenkins
 ```
 
 ### Persist Docker and set name
 
 ```sh
 docker run -p 8080:8080 -p 50000:50000 \
+    --name jenkins \
+    --network intervolz-network \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v jenkins_home:/var/jenkins_home \
     --restart always \
-    --name jenkins \
-    my-custom-jenkins
+    intervolz-jenkins
 ```
 
 ```sh
@@ -86,13 +95,14 @@ docker run -p 8080:8080 -p 50000:50000 \
     -v jenkins_home:/var/jenkins_home \
     --restart always \
     --name jenkins \
-    my-custom-jenkins
+    intervolz-jenkins
 ```
 
 ### Restart
 
 ```sh
 docker stop jenkins
+docker rm jenkins # remove
 ```
 
 ### Monitor
